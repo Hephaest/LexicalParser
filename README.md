@@ -1,3 +1,18 @@
+Table of Contents
+=================
+* [Lexical Parser Demo](#lexical-parser-demo)
+* [Lexical Parser](#lexical-parser)
+  * [Introduction](#introduction)
+     * [Software Usage Guide](#software-usage-guide)
+     * [Design and architecture](#design-and-architecture)
+        * [Design Ideas](#design-ideas)
+        * [Software Architecture](#software-architecture)
+  * [Functions](#functions)
+     * [Recognizer](#recognizer)
+     * [FMS](#fms)
+     * [Translator](#translator)
+  * [Test Results](#test-results)
+      
 # Lexical Parser Demo 
 
 <p align="center"><img src ="images/demo.gif" width = "600px"></p>
