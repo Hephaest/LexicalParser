@@ -32,7 +32,7 @@ Last updated on `2019/12/19`
 The lexical analyser is one of the important parts of a compiler to generate some form of intermediate representation that can be used to translate one computer programming language to machine language. Therefore, this repository introduces a new lexical parser software that could accurately and efﬁciently recognize the symbols and report errors. The objective of this repository is to help people develop a deep understanding of the lexical parser.
 
 ### Software Usage Guide
-My lexical parser is easy-to-use for the user without computer-related background. For the begin-ning, users could choose the ﬁle that has saved in their devices as a target program in Figure 1.
+My lexical parser is easy-to-use for the user without computer-related background. For the beginning, users could choose the ﬁle that has saved in their devices as a target program in Figure 1.
 
 <p align="center"><img src ="images/f1.png" width = "600px"></p>
 
@@ -45,7 +45,7 @@ After choosing, the user could click the **Start** button to generate tokens. Th
 This section has been divided into 2 parts, I will introduce my design ideas and corresponding architecture design separately. It is worth mentioning that, my design idea was inspired by *Lecture 7 from SCC.312*.
 
 #### Design Ideas
-Since the **Finite Machine State (FMS)** only accepts the symbols that following the certain grammar rules, I wrote my own grammar rules that could be achieved by the FMS to recognize symbols and catch unexpected identiﬁers. The detailed grammar rules has been listed in Table 1. In practice, I have split these rules into more small pieces of rules in order to make FMS recognize each of them.
+Since the **Finite Machine State (FMS)** only accepts the symbols that following the certain grammar rules, I wrote my own grammar rules that could be achieved by the FMS to recognize symbols and catch unexpected identiﬁers. The detailed grammar rules have been listed in Table 1. In practice, I have split these rules into more small pieces of rules in order to make FMS recognize each of them.
 
 <p align="center"><img src ="images/t1.png" width = "600px"></p>
 
@@ -53,7 +53,7 @@ As the diagram is shown in Figure 3, my FMS mainly contains 9 branches and each 
 
 <p align="center"><img src ="images/f3.png" width = "500px"></p>
 
-So far, our discussion has stayed on the theoretical implementation method. However, this FMS is a Non-deterministic Finite State Machine (NFMS), which means itself is hard to implement. There-fore, in the next part, I will introduce my design architecture that could handle this issue by splitting this tricky NFMS into multiple simple Java modules.
+So far, our discussion has stayed on the theoretical implementation method. However, this FMS is a Non-deterministic Finite State Machine (NFMS), which means itself is hard to implement. Therefore, in the next part, I will introduce my design architecture that could handle this issue by splitting this tricky NFMS into multiple simple Java modules.
 
 #### Software Architecture
 As we have learnt, the simple components of the lexical analyser are recognizer and translator. My architecture design is based on this simple structure. The duty of recognizer is to catch all legal symbols such as keyword, identiﬁer and so on. During parsing, it should report an error if there is any character that cannot be accepted according to my grammar rules. As for a translator, it saves the type and value of each symbol and also gives it a unique type code as required. This simple structure has shown in Figure 4.
@@ -68,9 +68,9 @@ To better understanding of the procedure of lexical parser, I drew a ﬂow chart
 
 <p align="center"><img src ="images/f6.png" width = "500px"></p>
 
-In addition to general lexical recognition, I add some features that belong to syntax analyser. For in-stance, my lexical parser tracks all types of brackets and comment symbol in the purpose of checking generic programming language grammar. This can be a great help if the user made some low-level grammar mistakes then my lexical parser could quickly parse through these mistakes and provide correlated error warnings.
+In addition to general lexical recognition, I add some features that belong to syntax analyser. For instance, my lexical parser tracks all types of brackets and comment symbol in the purpose of checking generic programming language grammar. This can be a great help if the user made some low-level grammar mistakes then my lexical parser could quickly parse through these mistakes and provide correlated error warnings.
 
-In order to simulate the computer’s execution of the underlying language, I chose to recognize sym-bols character by character. The main technique of my lexical parser is **Look Ahead**. Under normal circumstances, my program only looks ahead one step. However, some recognition method needs to look ahead more than three steps.
+In order to simulate the computer’s execution of the underlying language, I chose to recognize symbols character by character. The main technique of my lexical parser is **Look Ahead**. Under normal circumstances, my program only looks ahead one step. However, some recognition method needs to look ahead more than three steps.
 
 ## Functions
 The coding tasks were split into different part. In this repository, I will introduce my core algorithms.
@@ -190,7 +190,7 @@ FMS did the main recognition jobs at my lexical parser. For the beginning, the p
     }
 
 ```
-Look Ahead(N) has been used when checking whether the current string is keyword or identiﬁer. Since Java allows the identiﬁer with preﬁxes of “ ” or “$”, my lexical parser also follows the same grammar rule. The code as shown as follows.
+Look Ahead(N) has been used when checking whether the current string is keyword or identiﬁer. Since Java allows the identiﬁer with preﬁxes of `_` or `$`, my lexical parser also follows the same grammar rule. The code as shown as follows.
 ```java
 /**
      * This method is used to check whether the current symbol is keyword or identifier.
@@ -245,7 +245,7 @@ We should also remind that the length of the user-deﬁned identiﬁer is at mos
         return false;
     }
 ```
-Another more complex **Look Ahead(N)** algorithm is used to check whether it is **String** or **Char** type. In fact, it is easy to extract the string from String type. However, it becomes quite difﬁcult when identifying **Char** types. Some people may think the pattern is something like an ‘a’. That is totally wrong, in fact, the **Char** types is the most complex type because it can combined escape character (e.g., ‘\u0024’, ‘\000’ and ‘\b’). This requires my lexical parser “look ahead” at most 3 steps. The complete recognition process is shown as follows.
+Another more complex **Look Ahead(N)** algorithm is used to check whether it is **String** or **Char** type. In fact, it is easy to extract the string from String type. However, it becomes quite difﬁcult when identifying **Char** types. Some people may think the pattern is something like an ‘a’. That is totally wrong, in fact, the **Char** type is the most complex type because it can combined escape character (e.g., ‘\u0024’, ‘\000’ and ‘\b’). This requires my lexical parser “look ahead” at most 3 steps. The complete recognition process is shown as follows.
 ```java
 /**
      * This method is used to check whether the current symbol is start of string or character.
