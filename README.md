@@ -1,5 +1,6 @@
 # Lexical Parser Demo 
 
+<p align="center"><img src ="images/demo.gif" width = "600px"></p>
 
 # Lexical Parser
 [![LICENSE](https://img.shields.io/cocoapods/l/AFNetworking.svg)](https://github.com/Hephaest/LexicalParser/blob/master/LICENSE)
