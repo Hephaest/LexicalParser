@@ -2,17 +2,17 @@
 =================
 * [效果演示图](#效果演示图)
 * [Java 实现词法分析器](#Java-实现词法分析器)
-  * [项目介绍](#introduction)
-     * [Software Usage Guide](#software-usage-guide)
-     * [Design and architecture](#design-and-architecture)
-        * [Design Ideas](#design-ideas)
-        * [Software Architecture](#software-architecture)
-  * [Functions](#functions)
-     * [Recognizer](#recognizer)
-     * [FMS](#fms)
-     * [Translator](#translator)
-  * [Test Results](#test-results)
-  * [Download](#download)
+  * [项目介绍](#项目介绍)
+     * [软件使用指南](#软件使用指南)
+     * [软件设计与架构](#软件设计与架构)
+        * [设计理念](#设计理念)
+        * [软件架构](#软件架构)
+  * [软件函数](#软件函数)
+     * [识别器](#识别器)
+     * [有限状态机](#有限状态机)
+     * [翻译器](#翻译器)
+  * [测试结果](#测试结果)
+  * [下载](#下载)
       
 # 效果演示图
 
@@ -26,57 +26,57 @@
 
 [English](README.md) | 中文
 
-Last updated on `2019/12/19`
+最后一次更新于 `2019/12/19`
 
-## Introduction
-The lexical analyser is one of the important parts of a compiler to generate some form of intermediate representation that can be used to translate one computer programming language to machine language. Therefore, this repository introduces a new lexical parser software that could accurately and efﬁciently recognize the symbols and report errors. The objective of this repository is to help people develop a deep understanding of the lexical parser.
+## 项目介绍
+词法分析器是编译器的重要组成部分用于生成某种形式的中间语言，该中间语言可用于将一种计算机编程语言转换为机器语言。 因此，本仓库引入了一种新的词法分析器软件，该软件可以准确有效地识别符号并报告错误。 本仓库的目的是帮助人们加深对词法分析器的理解。
 
-### Software Usage Guide
-My lexical parser is easy-to-use for the user without computer-related background. For the begin-ning, users could choose the ﬁle that has saved in their devices as a target program in Figure 1.
+### 软件设计与架构
+我对词法分析器对于没有任何计算机相关背景的用户来说也是容易上手的。首先，用户可以点击 "Choose file" 来选择被读取的目标文件。
 
 <p align="center"><img src ="images/f1.png" width = "600px"></p>
 
-After choosing, the user could click the **Start** button to generate tokens. The generating results or warnings are shown in Figure 2(a). Finally, if the user doesn’t want to switch the ﬁle for further tests, the user could just close the window by clicking the **Finish** button as in Figure 2(b).
+选择完毕后，用户可以点击 **Start** 按钮，程序将把文档分析成一串一串的令牌，生成结果如图2所示。如果文档中有词法错误，程序将会像图2(a)这样报错。检查完生成结果后，用户如果不想再继续分析别的文档，可以直接点击 **Finish** 按钮结束当前窗口(如图2(b)所示)。
 
 <p align="center"><img src ="images/f2.png" width = "600px"></p>
 
-### Design and architecture
+### 软件设计与架构
 
-This section has been divided into 2 parts, I will introduce my design ideas and corresponding architecture design separately. It is worth mentioning that, my design idea was inspired by *Lecture 7 from SCC.312*.
+本节分为两小节，分别为我的设计理念和相应的体系结构设计。我的设计理论基础来自于 *SCC.312的第7讲*。
 
-#### Design Ideas
-Since the **Finite Machine State (FMS)** only accepts the symbols that following the certain grammar rules, I wrote my own grammar rules that could be achieved by the FMS to recognize symbols and catch unexpected identiﬁers. The detailed grammar rules has been listed in Table 1. In practice, I have split these rules into more small pieces of rules in order to make FMS recognize each of them.
+#### 设计理念
+由于 **有限状态机 (FMS)** 仅接受遵循某些语法规则的符号，因此我编写了自己的语法规则，FMS可以实现该规则以识别符号并捕获意外的标识符。表1中列出了详细的语法规则。在实践中，我将这些规则拆分为更多小规则，以使FMS能够识别每个规则。
 
 <p align="center"><img src ="images/t1.png" width = "600px"></p>
 
-As the diagram is shown in Figure 3, my FMS mainly contains 9 branches and each branch represents one type of the input stream. My lexical parser strictly follows the syntax deﬁnition of Java and it is easy for the user to intuitively understand the Java general grammar rules by this procedure.
+如图3所示，我的FMS主要包含9个分支，每个分支代表一种类型的输入流。 我的词法分析器严格遵循Java的语法定义，通过以下过程的示意图，用户很容易直观地理解 Java 通用语法规则。
 
 <p align="center"><img src ="images/f3.png" width = "500px"></p>
 
-So far, our discussion has stayed on the theoretical implementation method. However, this FMS is a Non-deterministic Finite State Machine (NFMS), which means itself is hard to implement. There-fore, in the next part, I will introduce my design architecture that could handle this issue by splitting this tricky NFMS into multiple simple Java modules.
+到目前为止，我们的讨论仍停留在理论上的实现方法上。但是，此FMS是 **非确定性有限状态机（NFMS）**，这意味着它本身很难实现。因此，在下一部分中，本仓库将介绍我的设计体系结构，该体系结构通过将此棘手的问题拆分为多个简单的 Java 模块来解决此问题。
 
-#### Software Architecture
-As we have learnt, the simple components of the lexical analyser are recognizer and translator. My architecture design is based on this simple structure. The duty of recognizer is to catch all legal symbols such as keyword, identiﬁer and so on. During parsing, it should report an error if there is any character that cannot be accepted according to my grammar rules. As for a translator, it saves the type and value of each symbol and also gives it a unique type code as required. This simple structure has shown in Figure 4.
+#### 软件架构
+如我们所知，词法分析器的简单组件是识别器和翻译器。我的架构设计基于这种简单的结构。识别者的职责是捕获所有合法符号，例如关键字，标识符等。在解析过程中，根据我的语法规则，如果有任何字符不能被接受，它将报告一个错误。对于翻译器，它将保存每个符号的类型和值，并根据需要为其提供唯一的类型代码。 这种简单的结构如图4所示。
 
 <p align="center"><img src ="images/f4.png" width = "400px"></p>
 
-Moreover, since the NFMS contains a lot of features, I decided to make these as a pile of single functions. In addition, I wrote multiple modules specifically for recognizer, translator and token to distinguish their different responsibilities. I created a UML diagram by BlueJ as in Figure 5, this diagram could help you easier to understand relationships between the different roles.
+此外，由于 NFMS 包含许多功能，因此我决定将这些功能作为多个单一的功能进行。另外，我专门为识别器、有限状态机和翻译器编写了多个模块，以区分它们的不同职责。我通过 BlueJ 创建了 UML 图，如图5所示，该图可以帮助您更轻松地理解不同角色之间的关系。
 
 <p align="center"><img src ="images/f5.png" width = "600px"></p>
 
-To better understanding of the procedure of lexical parser, I drew a ﬂow chart as shown in Figure 6. The order of checking procedure (comment → string → keyword or identiﬁer → numeric → legal symbol) is key to parsing success.
+为了更好地理解词法分析器的过程，我绘制了一个流程图，如图6所示。检查过程的顺序(注释→字符串→关键字或标识符→数字→合法符号)是解析成功的关键。
 
 <p align="center"><img src ="images/f6.png" width = "500px"></p>
 
-In addition to general lexical recognition, I add some features that belong to syntax analyser. For in-stance, my lexical parser tracks all types of brackets and comment symbol in the purpose of checking generic programming language grammar. This can be a great help if the user made some low-level grammar mistakes then my lexical parser could quickly parse through these mistakes and provide correlated error warnings.
+除了一般的词法识别之外，我还添加了一些属于语法分析器的功能。比方说，我的词法分析器会跟踪所有类型的括号和注释符号，以检查通用编程语言语法。如果用户犯了一些低级的语法错误，那么这对分析器来说可是个轻松活了，我的词法分析器便可以快速解析这些错误并提供相关的警告。
 
-In order to simulate the computer’s execution of the underlying language, I chose to recognize sym-bols character by character. The main technique of my lexical parser is **Look Ahead**. Under normal circumstances, my program only looks ahead one step. However, some recognition method needs to look ahead more than three steps.
+为了模拟计算机对基本语言的执行，我选择了逐个字符地识别符号。我的词法分析器的主要技术是 **向前看**。 通常情况下，我的程序只向前看一步。但是，某些识别方法需要超过三步。
 
-## Functions
-The coding tasks were split into different part. In this repository, I will introduce my core algorithms.
+## 软件函数
+软件的功能被分为不同的函数。在此存储库中，我将介绍我的核心算法。
 
-### Recognizer
-In my lexical parser, the main role of recognizer is to read the ﬁle contents from the buffer and transfer these strings as characters to the FMS as shown as follows.
+### 识别器
+在我的词法分析器中，识别器的主要作用是从缓冲区读取文件内容，并将这些字符串作为字符传输到 FMS，如下所示。
 ```java
     /**
      * This method is used to read the line character by character.
@@ -93,7 +93,7 @@ In my lexical parser, the main role of recognizer is to read the ﬁle contents 
         return SUCCESS;
     }
 ```
-Another function of recognizer is to be a syntax analyser beginner. My recognizer has the ability to ﬁnd out redundant symbols of comments and brackets by tracking the number of brackets and comments as I mentioned before. The following code introduces how it works and which type of errors will be reported according to different situations. “skip” means some error occurred so no further parsing needed.
+识别器的另一个功能是成为一个简单的语法分析器。如前所述，我的识别器可以通过跟踪括号和注释的数量来找出注释和括号的多余符号。以下代码介绍了它的工作方式以及根据不同情况报告的错误类型。“skip” 表示发生了一些错误，因此不需要进一步分析。
 ```java
 /**
      * This method is used to read the buffer line by line.
