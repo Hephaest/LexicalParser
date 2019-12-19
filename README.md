@@ -389,4 +389,5 @@ The test samples are [available](https://github.com/Hephaest/LexicalParser/tree/
 
 ## Download
 I have packed the source code as executable files for PC platform. Enjoy yourself! 
+
 **For Windows 64-bit**: [Download here](https://github.com/Hephaest/LexicalParser/raw/master/download/LexicalParser_windows-x64.exe)
