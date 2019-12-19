@@ -12,6 +12,7 @@ Table of Contents
      * [FMS](#fms)
      * [Translator](#translator)
   * [Test Results](#test-results)
+  * [Download](#download)
       
 # Lexical Parser Demo 
 
@@ -385,3 +386,7 @@ The successful parsing results and error warning results are listed as follows.
 <p align="center"><img src ="images/f17.png" width = "600px"></p>
 
 The test samples are [available](https://github.com/Hephaest/LexicalParser/tree/master/test).
+
+## Download
+I have packed the source code as executable files for PC platform. Enjoy yourself! 
+**For Windows 64-bit**: [Download here](https://github.com/Hephaest/LexicalParser/raw/master/download/LexicalParser_windows-x64.exe)
