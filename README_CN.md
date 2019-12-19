@@ -131,8 +131,8 @@
         }
     }
 ```
-### FMS
-FMS did the main recognition jobs at my lexical parser. For the beginning, the program will check comment state. If it hasn’t meet corresponding closed comment symbol, then we regard the current line is in comments. In other words, there is no further necessary checking needed. However, this procedure is very complex so it should consider some extreme error conditions. The code as shown as follows.
+### 有限状态机
+有限状态机在我的词法分析器中承担了主要的识别工作。首先，程序将检查注释状态。如果还没有遇到相应的闭注释符号，则我们认为当前行在注释中。换句话说，不需要进一步的必要检查。但是，此过程非常复杂，因此应考虑一些极端错误情况。代码如下所示。
 ```java
 /**
      * This method is used to record the number of open or close comment symbol and then change to another state.
@@ -190,7 +190,7 @@ FMS did the main recognition jobs at my lexical parser. For the beginning, the p
     }
 
 ```
-Look Ahead(N) has been used when checking whether the current string is keyword or identiﬁer. Since Java allows the identiﬁer with preﬁxes of “ ” or “$”, my lexical parser also follows the same grammar rule. The code as shown as follows.
+在检查当前字符串是关键字还是标识符时，使用的方法是向前看 N 步。由于 Java 允许标识符以 `_` 或 `$` 作为前缀，因此我的词法分析器也遵循相同的语法规则。代码如下所示。
 ```java
 /**
      * This method is used to check whether the current symbol is keyword or identifier.
@@ -227,7 +227,7 @@ Look Ahead(N) has been used when checking whether the current string is keyword 
         return isUnsignedNumber(c, line, col, sb);
     }
 ```
-We should also remind that the length of the user-deﬁned identiﬁer is at most 32 bytes. The corresponding function is shown as follows.
+我们还应该留意用户定义的标识符的长度最大为32个字节。相应功能如下所示。
 ```java
 /**
      * This method is used to check whether the length of user defined identifier's name exceeds the 32 Bytes.
@@ -245,7 +245,7 @@ We should also remind that the length of the user-deﬁned identiﬁer is at mos
         return false;
     }
 ```
-Another more complex **Look Ahead(N)** algorithm is used to check whether it is **String** or **Char** type. In fact, it is easy to extract the string from String type. However, it becomes quite difﬁcult when identifying **Char** types. Some people may think the pattern is something like an ‘a’. That is totally wrong, in fact, the **Char** types is the most complex type because it can combined escape character (e.g., ‘\u0024’, ‘\000’ and ‘\b’). This requires my lexical parser “look ahead” at most 3 steps. The complete recognition process is shown as follows.
+另一种更复杂的**朝前看N步**算法被用于检查它是**字符串**类型还是**字符**类型。实际上，从String类型中提取字符串很容易。 但是，在识别 **Char** 类型时变得非常困难。不注意细节的朋友们可能认为该模式仅仅应用于单字符如`a`这样的场景。这是完全错误的，**Char** 类型是最复杂的类型，因为它可以组合转义字符(例如'\u0024'，'\000'和'\b')。这要求我的词法分析器**最多**向前看三步。完整的识别过程如下所示。
 ```java
 /**
      * This method is used to check whether the current symbol is start of string or character.
@@ -326,12 +326,12 @@ Another more complex **Look Ahead(N)** algorithm is used to check whether it is 
         return isKeywordOrIdentifier(c, line, col, sb);
     }
 ```
-### Translator
-The role of my translator is to collect tokens from the FMS and generate a unique id for each of them. I made a Token class that speciﬁcally generates tokens. Then I created a new class called Index to extend the Token class in order to generate a unique id for each token. Finally, all the token will be appended orderly into an ArrayList that tracks tokens and their position for the further syntax analysis. The relationships within different data structure as shown in Figure 14.
+### 翻译器
+翻译器的职责是从 FMS 收集令牌，并为每个令牌生成唯一的ID。我制作了一个 Token 类，该类专门用于生成令牌。然后，我创建了一个名为 Index 的新类来扩展 Token 类，以便为每个令牌生成唯一的ID。最后，所有标记将有序地附加到 ArrayList 中，该列表跟踪标记及其位置，以进行进一步的语法分析。不同数据结构内的关系如图14所示。
 
 <p align="center"><img src ="images/f14.png" width = "500px"></p>
 
-The basic operations of the Translator class as shown as follows.
+Translator类的基本操作如下所示。
 ```java
 public class Translator {
     // Variables declaration
@@ -378,16 +378,16 @@ public class Translator {
     }
 }
 ```
-## Test Results
-The successful parsing results and error warning results are listed as follows.
+## 测试结果
+下图列出了成功解析和错误警告的示意结果。
 
 <p align="center"><img src ="images/f16.png" width = "600px"></p>
 
 <p align="center"><img src ="images/f17.png" width = "600px"></p>
 
-The test samples are [available](https://github.com/Hephaest/LexicalParser/tree/master/test).
+测试样本已上传到[这里](https://github.com/Hephaest/LexicalParser/tree/master/test).
 
-## Download
-I have packed the source code as executable files for PC platform. Enjoy yourself! 
+## 下载
+由于许可证的问题，目前仅提供 Windows 平台的执行程序，如果您感兴趣可点击下方链接直接下载安装。
 
-**For Windows 64-bit**: [Download here](https://github.com/Hephaest/LexicalParser/raw/master/download/LexicalParser_windows-x64.exe)
+**适用于 Windows 64 位**: [Download here](https://github.com/Hephaest/LexicalParser/raw/master/download/LexicalParser_windows-x64.exe)
