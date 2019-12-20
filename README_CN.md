@@ -390,4 +390,4 @@ public class Translator {
 ## 下载
 由于许可证的问题，目前仅提供 Windows 平台的执行程序，如果您感兴趣可点击下方链接直接下载安装。
 
-**适用于 Windows 64 位**: [Download here](https://github.com/Hephaest/LexicalParser/raw/master/download/LexicalParser_windows-x64.exe)
+**适用于 Windows 64 位**: [点击这里下载](https://github.com/Hephaest/LexicalParser/raw/master/download/LexicalParser_windows-x64.exe)
